@@ -9,9 +9,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Root from "./routes/root";
 import ErrorPage from "./error-page";
-import BlockDetails from "./routes/block-details";
+import BlockDetails, { loader as blockLoader } from "./routes/block-details";
 import Address, { loader as addressLoader } from "./routes/address";
-import TxDetails from "./routes/tx-details";
+import TxDetails, { loader as txDetailsLoader } from "./routes/tx-details";
 import Txs from "./routes/txs";
 
 const router = createBrowserRouter([
@@ -23,6 +23,7 @@ const router = createBrowserRouter([
   {
     path: "block/:blockNumber",
     element: <BlockDetails />,
+    loader: blockLoader,
   },
   {
     path: "address/:address",
@@ -32,6 +33,7 @@ const router = createBrowserRouter([
   {
     path: "tx/:txHash",
     element: <TxDetails />,
+    loader: txDetailsLoader,
   },
   {
     path: "txs/:blockNumber",
