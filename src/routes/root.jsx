@@ -1,24 +1,22 @@
 import { Alchemy, Network } from "alchemy-sdk";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
-import "./App.css";
+import "../App.css";
+import { SETTINGS } from "../constants/constants";
 
 // Refer to the README doc for more information about using API
 // keys in client-side code. You should never do this in production
 // level code.
-const settings = {
-  apiKey: process.env.REACT_APP_ALCHEMY_API_KEY,
-  network: Network.ETH_MAINNET,
-};
 
 // In this week's lessons we used ethers.js. Here we are using the
 // Alchemy SDK is an umbrella library with several different packages.
 //
 // You can read more about the packages here:
 //   https://docs.alchemy.com/reference/alchemy-sdk-api-surface-overview#api-surface
-const alchemy = new Alchemy(settings);
+export const alchemy = new Alchemy(SETTINGS);
 
-function App() {
+function Root() {
   const [blockNumber, setBlockNumber] = useState();
   const [blocks, setBlocks] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -58,9 +56,13 @@ function App() {
           <div className="align-self-center">Latest Blocks</div>
           <div className="d-flex flex-column">
             {blocks.map((block) => (
-              <div className="d-flex justify-content-between" key={block.nu}>
-                <div>{block.number}</div>
-                <div>{block.transactions.length} txs</div>
+              <div className="d-flex justify-content-between" key={block.number}>
+                <div>
+                  <Link to={`block/${block.number}`}>{block.number}</Link>
+                </div>
+                <div>
+                  <Link to={`txs/${block.number}`}>{block.transactions.length} txs</Link>
+                </div>
               </div>
             ))}
           </div>
@@ -73,9 +75,15 @@ function App() {
               .map((tx) => (
                 <div className="row" key={tx.nonce}>
                   <div className="col-1">Tx</div>
-                  <div className="col">{tx.hash.substring(0, 8)}...</div>
-                  <div className="col">From: {tx.from.substring(0, 8)}...</div>
-                  <div className="col">To: {tx.to.substring(0, 8)}...</div>
+                  <div className="col">
+                    <Link to={`tx/${tx.hash}`}>{tx.hash.substring(0, 8)}...</Link>
+                  </div>
+                  <div className="col">
+                    From: <Link to={`address/${tx.from}`}>{tx.from.substring(0, 8)}...</Link>
+                  </div>
+                  <div className="col">
+                    To: <Link to={`address/${tx.to}`}>{tx.to.substring(0, 8)}...</Link>
+                  </div>
                 </div>
               ))}
           </div>
@@ -85,4 +93,4 @@ function App() {
   );
 }
 
-export default App;
+export default Root;
