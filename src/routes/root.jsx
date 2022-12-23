@@ -1,4 +1,4 @@
-import { Alchemy, Network } from "alchemy-sdk";
+import { Alchemy, Network, Utils } from "alchemy-sdk";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -58,7 +58,7 @@ function Root() {
             {blocks.map((block) => (
               <div className="d-flex justify-content-between" key={block.number}>
                 <div>
-                  <Link to={`block/${block.number}`}>{block.number}</Link>
+                  <Link to={`block/${Utils.hexlify(block.number)}`}>{block.number}</Link>
                 </div>
                 <div>
                   <Link to={`txs/${block.number}`}>{block.transactions.length} txs</Link>
