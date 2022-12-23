@@ -1,4 +1,4 @@
-import { Alchemy, Utils } from "alchemy-sdk";
+import { Utils } from "alchemy-sdk";
 import { Link, useLoaderData } from "react-router-dom";
 import { alchemy } from "./root";
 
